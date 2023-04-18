@@ -84,9 +84,7 @@ h6{
 }
 
 a{
-    display:inline-block;
     text-decoration: none; 
-
 }
 
 a:active,a:focus,a:hover{
@@ -314,7 +312,10 @@ input.au-input.au-input-xl{
  * Left Menu Bar
  * ----------------------------
  */
-
+ .logo img {
+    height: 60px;
+    margin-bottom: 10%;
+}
 .menu-sidebar{
     width:200px;
     position:fixed;
@@ -328,7 +329,7 @@ input.au-input.au-input-xl{
 .menu-sidebar .logo{
     background:#fff;
     height:75px;
-    padding:0 35px;
+    padding:0 60px;
     display:-webkit-box;
     display:-webkit-flex;
     display:-moz-box;
@@ -724,6 +725,10 @@ table.table.table-bordered th{
 }
 .detail-section{
     margin-top:60px
+}
+
+.detail-img {
+    width: 30%;
 }
 /**/
 
