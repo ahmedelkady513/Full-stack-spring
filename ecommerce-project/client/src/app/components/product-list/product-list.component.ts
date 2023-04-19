@@ -11,8 +11,16 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
-  currentCategoryId?: number;
+  currentCategoryId?: number = 1;
+  previousCategoryId: number = 1;
   searchMode: boolean = false;
+
+  //pagination properties
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalElements: number = 0;
+
+  previousSearchText: string = "";
 
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
 
@@ -36,10 +44,15 @@ export class ProductListComponent implements OnInit {
   handleSearchProducts() {
     const searchText: string = this.route.snapshot.paramMap.get('keyword')!;
 
-    this.productService.searchProducts(searchText).subscribe(
-      data => {
-        this.products = data;
-      });
+    // if we have a different keyword that previous
+    // then set pageNumber to 1
+
+    if (this.previousSearchText != searchText) {
+      this.pageNumber = 1;
+    }
+    this.previousSearchText = searchText;
+
+    this.productService.SearchProductsPaginate(searchText, this.pageNumber - 1, this.pageSize).subscribe(this.processResult());
   }
 
   handleListProducts() {
@@ -53,11 +66,31 @@ export class ProductListComponent implements OnInit {
       this.currentCategoryId = 1;
     }
 
-    this.productService.getProductListForCategory(this.currentCategoryId).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
+    // check if we have ad ifferenct catrgory than previous
+    // note : angular will reuse a component if it s currently beign viewed so if it differenet catogry using the same component the pagenumber wotn be set to 1 at the top of this file
+    // if we have a differenet category id than previous
+    // then set pageNumber back to 1
+    if (this.previousCategoryId != this.currentCategoryId) {
+      this.pageNumber = 1;
+    }
+
+    this.previousCategoryId = this.currentCategoryId;
+    this.productService.getProductsListForCategoryPaginate(this.currentCategoryId, (this.pageNumber - 1), this.pageSize).subscribe(this.processResult());
+  }
+  // event function for the page size selector
+  updatePageSize(pageSize: string) {
+    this.pageSize = +pageSize;
+    this.pageNumber = 1;
+    this.listProducts();
+  }
+  // helper method to process result of type GetResponseProducts
+  processResult() {
+    return (data: any) => {
+      this.products = data._embedded.products;
+      this.pageNumber = data.page.number + 1;
+      this.pageSize = data.page.size;
+      this.totalElements = data.page.totalElements;
+    };
   }
 
 }
