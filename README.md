@@ -19,13 +19,14 @@ Full Stack E-Commerce Project Using Angluar and Spring Boot
 - Product catalog with search and filter options
 - Shopping cart and checkout functionality
 - Order management
-
+- JWT Authentication
+  
 ## Work in Progress
 
 - Integrate payment gateway for secure transactions
 - Implement product reviews and ratings system
-- Add JWT Authentication
-- 
+
+  
 ## Technologies Used
 
 ### Backend
