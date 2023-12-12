@@ -25,7 +25,8 @@ Full Stack E-Commerce Project Using Angluar and Spring Boot
 
 - Integrate payment gateway for secure transactions
 - Implement product reviews and ratings system
-
+- Implement Refresh Token
+- Implement Admin Panel
   
 ## Technologies Used
 
