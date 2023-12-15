@@ -1,14 +1,8 @@
 package com.elkady.ecommerce.service;
 
-import com.elkady.ecommerce.Dto.LoginDto;
-import com.elkady.ecommerce.Dto.RegisterDto;
 import com.elkady.ecommerce.dao.UserRepository;
 import com.elkady.ecommerce.entity.User;
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

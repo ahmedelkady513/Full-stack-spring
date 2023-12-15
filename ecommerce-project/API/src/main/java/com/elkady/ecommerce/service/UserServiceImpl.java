@@ -1,9 +1,11 @@
 package com.elkady.ecommerce.service;
 
 import com.elkady.ecommerce.Dto.LoginDto;
+import com.elkady.ecommerce.Dto.LoginResponseDto;
 import com.elkady.ecommerce.Dto.RegisterDto;
 import com.elkady.ecommerce.dao.UserRepository;
 import com.elkady.ecommerce.entity.User;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,12 +36,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(LoginDto loginDto) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.username(),loginDto.password()));
-            return jwtService.generateToken(loginDto.username());
-        } catch (AuthenticationException ex){
-            return ex.getMessage();
-        }
+    public LoginResponseDto login(LoginDto loginDto) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.username(),loginDto.password()));
+        String token = jwtService.generateToken(loginDto.username());
+        return new LoginResponseDto(jwtService.extractUsername(token),token,jwtService.extractClaim(token,Claims::getExpiration) );
     }
 }

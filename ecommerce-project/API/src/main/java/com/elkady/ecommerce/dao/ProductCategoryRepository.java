@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.elkady.ecommerce.entity.ProductCategory;
 
-@RepositoryRestResource(collectionResourceRel = "productCategory" , path = "productCategories")
+@RepositoryRestResource(collectionResourceRel = "productCategory" , path = "product-category")
 @CrossOrigin
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory,Long>{
     
