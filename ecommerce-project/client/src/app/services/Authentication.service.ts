@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoginInfo } from '../common/login-info';
 import { User } from '../common/user';
@@ -45,25 +45,18 @@ export class AuthenticationService {
     return this.currentUserSubject.asObservable();
   }
 
-  tokenValid(): boolean {
-    const user = this.localStorageService.getItem<User>('user');
-    if (!user) {
-      return false;
-    }
+  tokenValid(): Observable<boolean> {
 
-    try {
-      console.log(user.expiredAt)
-
-      const token: JwtToken = jwtDecode<JwtToken>(user.token);
-      console.log(token)
-
-      const now = Date.now();
-      return token.exp * 1000 > now;
-    } catch (error) {
-      console.log('imherre')
-
-      return false;
-    }
+    this.setCurrentUser();
+    return this.getUser().pipe(
+      map(user => {
+        if (user) {
+          return new Date(user.expiredAt).getTime() > Date.now();
+        }
+        return false
+      }),
+      catchError(err => of(false))
+    )
 
   }
 
