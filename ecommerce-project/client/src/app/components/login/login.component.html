@@ -1,0 +1,34 @@
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="col-md-6 col-10 rounded shadow-lg p-4 ">
+        <img src="assets/images/logo.png" class="img-fluid mb-4 mx-auto d-block" alt="logo">
+        <form #loginForm="ngForm" (ngSubmit)="login()">
+            <div class="input-group  mb-3">
+                <span  class="input-group-text" id="basic-addon1">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                </span>
+                <div class="form-floating" >
+                    <input type="email" [(ngModel)]="loginInfo.username" name="username" class="form-control" id="username" placeholder=""/>
+                    <label class="" for="username">Username</label>
+                </div>
+            </div>
+            <div class="input-group  mb-1">
+                <span  class="input-group-text" id="basic-addon1">
+                    <fa-icon [icon]="faLock"></fa-icon>
+                </span>
+                <div class="form-floating ">
+                    <input type="password" id="password" [(ngModel)]="loginInfo.password" name="password" class="form-control" aria-describedby="passwordHelpBlock"   placeholder="Password">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+                <div class="d-flex flex-row  justify-content-between  py-2">
+                    <div class="form-check mt-2">
+                        <input class="form-check-input"   type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                          Remember Me
+                        </label>
+                      </div>
+                    <button type="submit" class="btn col-md-3 btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
