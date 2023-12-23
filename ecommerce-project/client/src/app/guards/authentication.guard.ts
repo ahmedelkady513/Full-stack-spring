@@ -10,15 +10,16 @@ export const AuthenticationGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthenticationService)
   const router = inject(Router);
 
-    return authService.tokenValid().pipe(
-      map(isValid => {
+  return authService.tokenValid().pipe(
+    map(isValid => {
 
-        if(!isValid) {
-          router.navigate(['/login']);
-          return false;
-        }
-        return true;
-      })
-    );
-  };
+      if (!isValid) {
+        router.navigate(['/login']);
+        authService.logout();
+        return false;
+      }
+      return true;
+    })
+  );
+};
 
