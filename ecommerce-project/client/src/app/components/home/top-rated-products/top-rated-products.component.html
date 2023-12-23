@@ -1,0 +1,30 @@
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-5">
+    @for(product of recentProducts; track product;){
+    <div class="col">
+      <div class="card shadow rounded-5 h-100 ">
+        <img src="{{ product.imageUrl }}" class="card-img-top" alt="..." />
+        <div class="card-body text-start d-flex flex-column">
+          <h5 class="card-title fw-bold flex-grow-1">{{ product.name }}</h5>
+          <div class="d-flex  flex-row justify-content-between">
+            <p class="card-text">{{ product.description }}</p>
+            <span >
+                <p class="fw-semibold d-inline-block  font text-wrap">5.0</p>
+                <fa-icon class="px-1" [icon]="starIcon" size="lg" style="color: #f5e789;"></fa-icon>
+                <p class=" d-inline-block  font text-wrap">(40)</p>
+            </span>
+        </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="text-muted fw-bold">{{ product.unitPrice }}$</div>
+            <a href="#" class="btn btn-success btn">
+              Add To Cart
+              <fa-icon [icon]="cartIcon" size="sm"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  
+  
