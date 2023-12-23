@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartStatusComponent implements OnInit {
 
+  cartIcon = faBasketShopping;
   totalPrice: number = 0.00;
   totalQuantity: number = 0;
 
@@ -19,12 +21,12 @@ export class CartStatusComponent implements OnInit {
 
   updateCartStatus() {
     // subscribe to the cart totalPrice
-    this.cartService.totalPrice.subscribe(
+    this.cartService.totalPrice$.subscribe(
       data => this.totalPrice = data
     );
 
     // subdcribe to the cart totalQunantity
-    this.cartService.totalQuantity.subscribe(
+    this.cartService.totalQuantity$.subscribe(
       data => this.totalQuantity =data
     );
     

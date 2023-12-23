@@ -4,14 +4,12 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoginInfo } from '../common/login-info';
 import { User } from '../common/user';
-import { jwtDecode } from 'jwt-decode';
-import { JwtToken } from '../common/jwt-token';
 import { LocalStorageService } from './local-storage.service';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:8080/api';
   private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   constructor(private httpClient: HttpClient, private localStorageService: LocalStorageService) {
@@ -53,7 +51,7 @@ export class AuthenticationService {
         if (user) {
           return new Date(user.expiredAt).getTime() > Date.now();
         }
-        return false
+        return false;
       }),
       catchError(err => of(false))
     )

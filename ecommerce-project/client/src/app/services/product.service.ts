@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Product } from '../common/product';
 import { Observable, map } from 'rxjs';
 import { ProductCategory } from '../common/product-category';
+import { GetResponseProducts } from '../common/get-response-products';
+import { GetResponseProductCategory } from '../common/get-response-product-category';
 
 @Injectable({
   providedIn: 'root'
@@ -53,21 +55,8 @@ export class ProductService {
       map(response => response._embedded.productCategory)
     );
   }
-}
-
-
-interface GetResponseProducts {
-  _embedded: {
-    products: Product[];
-  },
-  page: {
-    number: number,
-    size: number;
-    totalElements: number,
-  }
-}
-interface GetResponseProductCategory {
-  _embedded: {
-    productCategory: ProductCategory[];
+  //get most recent added products
+  getRecentylAddedProducts(numberOfProducts : number) : Observable<Product[]> {
+    return this.getProducts(`${this.baseUrl}?sort=createdAt,desc&size=${numberOfProducts}`);
   }
 }
