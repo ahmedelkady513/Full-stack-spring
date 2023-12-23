@@ -2,6 +2,8 @@ package com.elkady.ecommerce.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,10 +11,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Table(name = "user")
 @Entity
-@Data
+//--@Data
+@Getter
+@Setter
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +43,9 @@ public class User implements UserDetails {
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ProductRating> ratings;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

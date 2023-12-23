@@ -2,23 +2,21 @@ package com.elkady.ecommerce.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Set;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Table(name = "product")
-@Data
+//@Data
+@Getter
+@Setter
 public class Product {
     
     @Id
@@ -59,4 +57,10 @@ public class Product {
     @UpdateTimestamp
     private Date lastUpdated;
 
+    @OneToOne
+    @JoinColumn(name = "inventory_id")
+    private ProductInventory inventory;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ProductRating> ratings;
 }
